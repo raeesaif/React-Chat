@@ -61,7 +61,7 @@ const Signup = () => {
                                 </div>
                             </div>
                             <div className='relative'>
-                                <input type={showCPassword ? "text" : "password"} placeholder='Enter your confrim password' className='rounded-lg px-2 py-1 border border-gray-300 outline-none w-full' {...register("confirmPassword")} />
+                                <input type={showCPassword ? "text" : "password"} placeholder='Enter your confirm password' className='rounded-lg px-2 py-1 border border-gray-300 outline-none w-full' {...register("confirmPassword")} />
                                 <span className='text-gray-300 absolute top-1/3 right-3 -translate-y-1/2 cursor-pointer ' onClick={() => setShowCPassword(!showCPassword)}  >
 
                                     {showCPassword ? <LockKeyholeOpen className='mb-1.5' /> : <LockKeyhole className='mb-1.5' />}
