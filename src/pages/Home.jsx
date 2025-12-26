@@ -27,16 +27,36 @@ const Home = () => {
 
     return (
         <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen flex flex-col" >
-            <div className="flex justify-end items-center gap-3 p-5 text-3xl ">
-                <div className="flex items-center gap-2">
-                    <Avatar className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" >{user?.user_metadata?.name?.charAt(0)?.toUpperCase()}</Avatar>
-                    <span className="text-white font-bold text-lg">{user?.user_metadata?.name || 'User'}</span>
-                </div>
+            <div className="flex justify-end items-center gap-3 p-5 text-3xl">
+                {!user ? (
+                    <button
+                        onClick={() => navigate("/login")}
+                        className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-2 px-3 rounded-lg cursor-pointer text-white"
+                    >
+                        Login
+                    </button>
+                ) : (
+                    <div className="flex items-center gap-3">
+                        <Avatar className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+                            {user?.user_metadata?.name?.charAt(0)?.toUpperCase()}
+                        </Avatar>
 
-                <Tooltip title="Logout" >
-                    <button onClick={() => logout()} className=" text-white font-bold cursor-pointer " ><LogOut /></button>
-                </Tooltip>
+                        <span className="text-white font-bold text-lg">
+                            {user?.user_metadata?.name || "User"}
+                        </span>
+
+                        <Tooltip title="Logout">
+                            <button
+                                onClick={logout}
+                                className="text-white font-bold cursor-pointer"
+                            >
+                                <LogOut />
+                            </button>
+                        </Tooltip>
+                    </div>
+                )}
             </div>
+
             <div className="  flex-1 flex  items-center justify-center p-4">
 
                 <main className="max-w-6xl w-full">
