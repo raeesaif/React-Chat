@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowBigLeft } from "lucide-react";
 import { socket } from "../socket.js";
+import CircularProgress from '@mui/material/CircularProgress';
 const INITIAL_VALUES = {
     name: ""
 }
@@ -12,6 +13,7 @@ const INITIAL_VALUES = {
 
 const OpenChat = () => {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         register,
@@ -24,12 +26,16 @@ const OpenChat = () => {
     })
 
     const onSubmit = (data) => {
+        setIsLoading(true);
         localStorage.setItem("userName", data?.name);
         localStorage.setItem("roomName", "Open Chat");
         localStorage.setItem("roomId", "open-chat-room");
         
         reset();
-        navigate("/open-chatmessage");
+        setTimeout(() => {
+            setIsLoading(false);
+            navigate("/open-chatmessage");
+        }, 1000);
     }
 
     return (
@@ -61,10 +67,18 @@ const OpenChat = () => {
                             {errors?.name && <p className="flex justify-start text-red-400" >{errors?.name?.message}</p>}
                             <button
                                 type="submit"
+                                disabled={isLoading}
                                 className={`py-3 px-8 rounded-full transition-all duration-200 font-medium 
-                                bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-pink-500/25 transform hover:scale-105 cursor-pointer`}
+                                bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-pink-500/25 transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 justify-center`}
                             >
-                                Join Chat
+                                {isLoading ? (
+                                    <>
+                                        <CircularProgress size={18} color="inherit" />
+                                        <span>Joining...</span>
+                                    </>
+                                ) : (
+                                    "Join Chat"
+                                )}
                             </button>
                         </div>
                     </form>

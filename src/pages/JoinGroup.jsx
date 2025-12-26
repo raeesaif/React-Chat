@@ -113,6 +113,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowBigLeft } from "lucide-react";
 import { useCreateRoom, useJoinRoom } from "../hook/useRoom.js";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const INITIAL_VALUE = {
     name: "",
@@ -205,17 +206,33 @@ const JoinGroup = () => {
                                 <button
                                     type="submit"
                                     onClick={() => setAction("create")}
-                                    className="py-3 px-8 rounded-full transition-all duration-200 font-medium bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white shadow-lg hover:shadow-purple-500/25 transform hover:scale-105 cursor-pointer"
+                                    disabled={createRoom.isPending || joinRoom.isPending}
+                                    className="py-3 px-8 rounded-full transition-all duration-200 font-medium bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white shadow-lg hover:shadow-purple-500/25 transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                 >
-                                    Create Room
+                                    {createRoom.isPending && action === "create" ? (
+                                        <>
+                                            <CircularProgress size={18} color="inherit" />
+                                            <span>Creating...</span>
+                                        </>
+                                    ) : (
+                                        "Create Room"
+                                    )}
                                 </button>
 
                                 <button
                                     type="submit"
                                     onClick={() => setAction("join")}
-                                    className="py-3 px-8 rounded-full transition-all duration-200 font-medium bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-pink-500/25 transform hover:scale-105 cursor-pointer"
+                                    disabled={createRoom.isPending || joinRoom.isPending}
+                                    className="py-3 px-8 rounded-full transition-all duration-200 font-medium bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-pink-500/25 transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                 >
-                                    Join Room
+                                    {joinRoom.isPending && action === "join" ? (
+                                        <>
+                                            <CircularProgress size={18} color="inherit" />
+                                            <span>Joining...</span>
+                                        </>
+                                    ) : (
+                                        "Join Room"
+                                    )}
                                 </button>
                             </div>
                         </div>
